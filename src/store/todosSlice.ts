@@ -1,56 +1,96 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { TodoType } from '../utils/types';
+import {
+  createTodo,
+  deleteTodo,
+  fetchTodos,
+  updateTodo,
+} from './api/todos';
 
-const initialState: Array<TodoType> = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
-    completed: false,
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
-    completed: true,
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Todo',
-    completed: false,
-  },
-];
+interface StateType {
+  data: Array<TodoType>;
+  isLoading: boolean;
+  isError: boolean;
+}
+
+const initialState: StateType = {
+  data: [],
+  isLoading: false,
+  isError: false,
+};
 
 export const todosSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
-    addTodo: (state, action: PayloadAction<TodoType>) => {
-      state.unshift(action.payload);
-    },
-    deleteTodo: (state, action: PayloadAction<string>) => {
-      return state.filter((todo) => todo.id !== action.payload);
-    },
-    editTodo: (state, action) => {
-      return state.map((todo) => {
-        if (todo.id === action.payload.id) {
-          return {
-            ...todo,
-            title: action.payload.title,
-          };
-        }
-
-        return todo;
-      });
-    },
     toggleTodo: (state, action) => {
-      const todo = state.find((todo) => todo.id === action.payload);
+      const todo = state?.data?.find(
+        (todo) => todo.id === action.payload
+      );
       if (todo) {
         todo.completed = !todo.completed;
       }
     },
   },
+  extraReducers: (builder) => {
+    // Fetch Todos
+    builder
+      .addCase(fetchTodos.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchTodos.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = action.payload;
+      })
+      .addCase(fetchTodos.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+      });
+
+    // Create Todo
+    builder
+      .addCase(createTodo.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(createTodo.fulfilled, (state, action) => {
+        state.isLoading = false;
+        fetchTodos();
+      })
+      .addCase(createTodo.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+      });
+
+    // Update Todo
+    builder
+      .addCase(updateTodo.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(updateTodo.fulfilled, (state, action) => {
+        state.isLoading = false;
+        fetchTodos();
+      })
+      .addCase(updateTodo.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+      });
+
+    // Delete Todo
+    builder
+      .addCase(deleteTodo.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteTodo.fulfilled, (state, action) => {
+        state.isLoading = false;
+        fetchTodos();
+      })
+      .addCase(deleteTodo.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+      });
+  },
 });
 
-export const { addTodo, deleteTodo, editTodo, toggleTodo } =
-  todosSlice.actions;
+export const { toggleTodo } = todosSlice.actions;
 
 export default todosSlice.reducer;

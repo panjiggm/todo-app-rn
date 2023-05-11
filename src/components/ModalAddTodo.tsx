@@ -11,8 +11,8 @@ import {
 } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { toggleAdd } from '../store/toggleSlice';
-import { addTodo } from '../store/todosSlice';
 import { MaterialIcons } from '@expo/vector-icons';
+import { createTodo } from '../store/api/todos';
 
 const ModalAddTodo = () => {
   const toggle = useAppSelector((state) => state.toggle);
@@ -22,10 +22,11 @@ const ModalAddTodo = () => {
 
   const handleSubmit = () => {
     dispatch(
-      addTodo({
+      createTodo({
         id: String(Date.now()),
         title,
         completed: false,
+        updatedAt: new Date(),
       })
     );
     setTitle('');

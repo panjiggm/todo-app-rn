@@ -19,7 +19,7 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { toggleEdit } from '../store/toggleSlice';
 import { TodoType } from '../utils/types';
 import { MaterialIcons } from '@expo/vector-icons';
-import { editTodo } from '../store/todosSlice';
+import { updateTodo } from '../store/api/todos';
 
 interface ModalEditTodoProps {
   todo: TodoType;
@@ -38,10 +38,9 @@ const ModalEditTodo: FC<ModalEditTodoProps> = ({ todo, onTodo }) => {
 
   const handleSubmit = () => {
     dispatch(
-      editTodo({
+      updateTodo({
         id: todo.id,
         title,
-        completed: todo.completed,
       })
     );
     setTitle('');

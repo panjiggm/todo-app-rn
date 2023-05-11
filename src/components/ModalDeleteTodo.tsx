@@ -9,9 +9,9 @@ import {
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { toggleDelete } from '../store/toggleSlice';
 import { MaterialIcons } from '@expo/vector-icons';
-import { deleteTodo } from '../store/todosSlice';
 
 import { TodoType } from '../utils/types';
+import { deleteTodo } from '../store/api/todos';
 
 interface ModalDeleteTodoProps {
   todo: TodoType;
@@ -26,7 +26,7 @@ const ModalDeleteTodo: FC<ModalDeleteTodoProps> = ({
   const dispatch = useAppDispatch();
 
   const handleDeleteTodo = () => {
-    dispatch(deleteTodo(todo.id));
+    dispatch(deleteTodo({ id: todo.id }));
     dispatch(toggleDelete(false));
     onTodo({ id: '', title: '', completed: false });
   };
