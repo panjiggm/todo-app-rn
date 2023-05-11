@@ -2,6 +2,10 @@
 
 React Native Todo App using Typescript, Redux-Toolkit and Supabase.
 
+> `main` branch : using external API
+
+> `local` branch : just local data
+
 ## Feature
 
 - View Todo
