@@ -32,11 +32,16 @@ export const createTodo = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const { error } = await supabase
+      const { error, data } = await supabase
         .from('Todo')
-        .insert({ id, title, completed, updatedAt });
+        .insert({ id, title, completed, updatedAt })
+        .select('*');
 
-      throw rejectWithValue(error);
+      if (error) {
+        throw rejectWithValue(error);
+      }
+
+      return data;
     } catch (error: any) {
       throw rejectWithValue(error.response.data);
     }
@@ -50,10 +55,15 @@ export const updateTodo = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('Todo')
         .update({ id, title })
-        .eq('id', id);
+        .eq('id', id)
+        .select('*');
+
+      if (error) {
+        throw rejectWithValue(error);
+      }
 
       return data;
     } catch (error: any) {
@@ -71,7 +81,9 @@ export const deleteTodo = createAsyncThunk(
         .delete()
         .eq('id', id);
 
-      throw rejectWithValue(error);
+      if (error) {
+        throw rejectWithValue(error);
+      }
     } catch (error: any) {
       throw rejectWithValue(error.response.data);
     }
