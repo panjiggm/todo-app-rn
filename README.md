@@ -33,7 +33,9 @@ React Native Todo App using Typescript, Redux-Toolkit and Supabase.
 2. Open Android / iOS emulator or download Expo Go from Play Store / App Store
 3. Follow the instruction
 
-APK : [Download](https://expo.dev/artifacts/eas/7ofNdPXb1KatNZt7v24zbL.apk)
+APK with API : [Download](https://expo.dev/artifacts/eas/7ofNdPXb1KatNZt7v24zbL.apk)
+
+APK local : [Download](https://expo.dev/artifacts/eas/tcSq7SrexUJfErqQCDraVF.apk)
 
 Design inspiration : [Dribble](https://dribbble.com/shots/14153121-ToDo-App-Dark-Theme)
 
