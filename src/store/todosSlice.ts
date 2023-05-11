@@ -15,7 +15,7 @@ interface StateType {
 
 const initialState: StateType = {
   data: [],
-  isLoading: false,
+  isLoading: true,
   isError: false,
 };
 
