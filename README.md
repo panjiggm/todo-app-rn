@@ -30,3 +30,21 @@ React Native Todo App using Typescript (`local version`), Redux-Toolkit and Supa
 3. Follow the instruction
 
 Design inspiration : [Dribble](https://dribbble.com/shots/14153121-ToDo-App-Dark-Theme)
+
+## Screenshot
+
+### View Todo
+
+![My Image](src/image/4.jpg)
+
+### Add Todo
+
+![My Image](src/image/3.jpg)
+
+### Edit Todo
+
+![My Image](src/image/2.jpg)
+
+### Delete Todo
+
+![My Image](src/image/1.jpg)
